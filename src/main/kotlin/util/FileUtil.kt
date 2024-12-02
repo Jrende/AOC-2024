@@ -17,6 +17,7 @@ class FileUtil {
             }
             return numbers;
         }
+
         fun stringToIntegers(input: String): List<Int> {
             val numbers = ArrayList<Int>()
             splitToNumbers(input) { str ->
@@ -35,7 +36,7 @@ class FileUtil {
                 if (char.matches(numberRegex)) {
                     currentNumber += char;
                 } else {
-                    if(char.matches(relatedCharacters) && currentString.take(1).matches(numberRegex) && (currentNumber.isNotEmpty() || char =Q= "-")) {
+                    if(char.matches(relatedCharacters) && currentString.take(1).matches(numberRegex) && (currentNumber.isNotEmpty() || char === "-")) {
                         currentNumber += char;
                         continue
                     }
