@@ -38,8 +38,9 @@ fun main() {
     }
 var count = 0;
     fun isSafeAndUgly(report: List<Int>): Boolean {
-        val asc = (report[0] - report[1]) < 0
+
         fun check(l: List<Int>): Int {
+            val asc = (l[0] - l[1]) < 0
             var firstMistakeIndex = -1;
             l.subList(0, l.size - 1).forEachIndexed() { index, num ->
                 val diff = l[index + 1] - num
@@ -142,5 +143,5 @@ var count = 0;
 //            .filter{ list -> list.filter { num -> num > 0 }.size < list.size - 1}
 //        .filter { list -> list.all { num -> num > 0 } || list.all { num -> num  < 0 } }
         .map { list -> list.joinToString() }
-    println(input.size)
+    println(safe.size)
 }
