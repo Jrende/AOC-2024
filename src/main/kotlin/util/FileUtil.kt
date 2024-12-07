@@ -8,7 +8,22 @@ class FileUtil {
         private val relatedCharacters = Regex("a|\\-|\\.|E|e")
         private val numberRegex = Regex("\\d")
 
-        fun getInput(day: Int) = File("input/day${day}").readLines()
+        fun getInput(day: Int, sample: Boolean = false): MutableList<String> =
+            File("input/day${day}${if (sample) "sample" else ""}")
+                .readLines()
+                .toMutableList()
+
+
+        fun List<String>.toGrid(): MutableList<MutableList<String>> =
+            this.filter(String::isNotEmpty)
+                .map {
+                    it
+                        .split("")
+                        .filter(String::isNotEmpty)
+                        .toMutableList()
+                }
+                .toMutableList()
+
 
         fun stringToDoubles(input: String): List<Double> {
             val numbers = ArrayList<Double>()
@@ -36,7 +51,9 @@ class FileUtil {
                 if (char.matches(numberRegex)) {
                     currentNumber += char;
                 } else {
-                    if(char.matches(relatedCharacters) && currentString.take(1).matches(numberRegex) && (currentNumber.isNotEmpty() || char === "-")) {
+                    if (char.matches(relatedCharacters) && currentString.take(1)
+                            .matches(numberRegex) && (currentNumber.isNotEmpty() || char === "-")
+                    ) {
                         currentNumber += char;
                         continue
                     }
