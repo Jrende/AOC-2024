@@ -4,6 +4,10 @@ class Guard(var pos:Pos, var direction:Direction=Direction.NORTH) {
     fun turnRight() {
         direction = direction.turnRight();
     }
+
+    fun copy(): Guard {
+        return Guard(pos.toMutableList(), direction)
+    }
 }
 
 class Turn(guard: Guard) {

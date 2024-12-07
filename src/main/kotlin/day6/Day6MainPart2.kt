@@ -12,9 +12,7 @@ enum class State {
 }
 
 fun main() {
-
-
-    fun step(grid: Grid, guard: Guard, turns: MutableList<Turn>): State {
+    fun step(grid: Grid, guard: Guard, turns: MutableSet<Turn>): State {
         grid[guard.pos[0]][guard.pos[1]] = "X"
 
         val newPos = listOf(guard.pos[0] + guard.direction.dir[0], guard.pos[1] + guard.direction.dir[1])
@@ -47,16 +45,40 @@ fun main() {
         println()
     }
 
+    fun Grid.copyGrid(): Grid {
+        return this.map { it.toMutableList() }.toMutableList()
+
+    }
+
+    fun walkGrid(grid: Grid, guard: Guard): State {
+        val turns = mutableSetOf<Turn>()
+        var done: State;
+        do {
+            done = step(grid, guard, turns)
+        } while (done === State.CONTINUE)
+        return done
+    }
+
     val input = FileUtil.getInput(6, sample = true).toGrid()
     val guardPos = input.findGuard() ?: return
     val guard = Guard(guardPos)
-    printGrid(input)
-    val turns = mutableListOf<Turn>()
-    input[guardPos[0]][guardPos[1]] = "."
-    do {
-        val done = step(input, guard, turns )
-    } while (done === State.CONTINUE)
 
-    
-    printGrid(input)
+
+    input[guardPos[0]][guardPos[1]] = "."
+    val walkedGrid = input.copyGrid()
+    walkGrid(walkedGrid, guard.copy())
+    printGrid(walkedGrid)
+    var loops = 0;
+    walkedGrid.forEachIndexed { x, line ->
+        line.forEachIndexed { y, char ->
+            if (char == "X") {
+                val newGrid = input.copyGrid()
+                newGrid[x][y] = "#"
+                if(walkGrid(newGrid, guard.copy()) == State.LOOP) {
+                    loops++;
+                }
+            }
+        }
+    }
+    println("Number of loops: $loops")
 }
