@@ -1,6 +1,8 @@
 package day6;
 
-class Guard(var pos:Pos, var direction:Direction=Direction.NORTH) {
+import util.Pos
+
+class Guard(var pos: Pos, var direction:Direction=Direction.NORTH) {
     fun turnRight() {
         direction = direction.turnRight();
     }

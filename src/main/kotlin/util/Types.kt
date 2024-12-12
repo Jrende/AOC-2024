@@ -1,6 +1,6 @@
-package day6
+package util
 
-typealias Grid = MutableList<MutableList<String>>
+
 typealias Pos = List<Int>;
 fun Grid.findGuard(): Pos? {
     this.forEachIndexed { x, line ->
@@ -16,7 +16,7 @@ fun Grid.findGuard(): Pos? {
 fun Grid.printGrid() {
     this.forEach { line ->
         line.forEach { char ->
-            print("$char ")
+            print("$char")
         }
         println()
     }

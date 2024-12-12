@@ -2,6 +2,8 @@ package day6
 
 import util.FileUtil
 import util.FileUtil.Companion.toGrid
+import util.Grid
+import util.findGuard
 
 enum class State {
     OUT_OF_BOUNDS,
@@ -59,7 +61,7 @@ fun main() {
         return done
     }
 
-    val input = FileUtil.getInput(6, sample = true).toGrid()
+    val input = FileUtil.getInput(6, sample = false).toGrid()
     val guardPos = input.findGuard() ?: return
     val guard = Guard(guardPos)
 

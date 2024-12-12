@@ -1,6 +1,6 @@
 package day6
 
-import util.FileUtil
+import util.*
 import util.FileUtil.Companion.toGrid
 
 fun step(grid: Grid, guard: Guard): Boolean {
