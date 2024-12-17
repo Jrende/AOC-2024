@@ -26,6 +26,18 @@ class FileUtil {
                 }
                 .toMutableList()
 
+        fun List<String>.toIntGrid(): MutableList<MutableList<Int>> =
+            this.filter(String::isNotEmpty)
+                .map {
+                    it
+                        .split("")
+                        .filter(String::isNotEmpty)
+                        .map { digit -> if (digit != ".") digit.toInt() else -1 }
+                        .toMutableList()
+                }
+
+                .toMutableList()
+
         fun List<List<String>>.printGrid() {
             this.forEach { line ->
                 line.forEach { char ->

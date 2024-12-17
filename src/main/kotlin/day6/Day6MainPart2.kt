@@ -14,7 +14,7 @@ enum class State {
 }
 
 fun main() {
-    fun step(grid: Grid, guard: Guard, turns: MutableSet<Turn>): State {
+    fun step(grid: Grid<String>, guard: Guard, turns: MutableSet<Turn>): State {
         grid[guard.pos[0]][guard.pos[1]] = "X"
 
         val newPos = listOf(guard.pos[0] + guard.direction.dir[0], guard.pos[1] + guard.direction.dir[1])
@@ -37,7 +37,7 @@ fun main() {
         return State.CONTINUE;
     }
 
-    fun printGrid(grid: Grid) {
+    fun printGrid(grid: Grid<String>) {
         grid.forEach { line ->
             line.forEach { char ->
                 print("$char ")
@@ -47,12 +47,12 @@ fun main() {
         println()
     }
 
-    fun Grid.copyGrid(): Grid {
+    fun Grid<String>.copyGrid(): Grid<String> {
         return this.map { it.toMutableList() }.toMutableList()
 
     }
 
-    fun walkGrid(grid: Grid, guard: Guard): State {
+    fun walkGrid(grid: Grid<String>, guard: Guard): State {
         val turns = mutableSetOf<Turn>()
         var done: State;
         do {

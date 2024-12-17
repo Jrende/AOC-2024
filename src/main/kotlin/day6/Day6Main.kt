@@ -3,7 +3,7 @@ package day6
 import util.*
 import util.FileUtil.Companion.toGrid
 
-fun step(grid: Grid, guard: Guard): Boolean {
+fun step(grid: Grid<String>, guard: Guard): Boolean {
     grid[guard.pos[0]][guard.pos[1]] = "X"
 
     val newPos = listOf(guard.pos[0] + guard.direction.dir[0], guard.pos[1] + guard.direction.dir[1])

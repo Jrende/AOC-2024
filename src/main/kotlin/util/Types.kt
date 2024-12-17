@@ -2,7 +2,7 @@ package util
 
 
 typealias Pos = List<Int>;
-fun Grid.findGuard(): Pos? {
+fun Grid<String>.findGuard(): Pos? {
     this.forEachIndexed { x, line ->
         line.forEachIndexed { y, char ->
             if (char == "^") {
@@ -13,7 +13,7 @@ fun Grid.findGuard(): Pos? {
     return null
 }
 
-fun Grid.printGrid() {
+fun Grid<String>.printGrid() {
     this.forEach { line ->
         line.forEach { char ->
             print("$char")
@@ -23,7 +23,8 @@ fun Grid.printGrid() {
     println()
 }
 
-fun Grid.sum(): Int {
+
+fun Grid<String>.sum(): Int {
     return this.fold(0) { acc, line ->
         acc + line.count { it == "X"}
     }
