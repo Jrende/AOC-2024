@@ -4,6 +4,27 @@ import util.FileUtil
 import kotlin.math.ceil
 import kotlin.math.log10
 
+// Number per stone id
+val stones = mutableMapOf<Long, Int>()
+typealias StoneTransformation = Pair<Long?, List<Long>?>
+fun processStone(stone: Long): StoneTransformation {
+    return if (stone == 0L) Pair(1, null)
+    else if ((ceil(log10((stone + 1L).toDouble())) % 2) == 0.0) {
+        val str = stone.toString();
+        val len = str.length / 2
+        val left = str.take(len)
+        val right = str.takeLast(len)
+        Pair(null, listOf(left.toLong(), right.toLong()))
+    } else {
+        Pair(stone * 2024, null)
+    }
+}
+
+
+val stoneTransformations = mutableMapOf<Long, StoneTransformation>()
+fun getOrProcessStone(stone: Long): StoneTransformation {
+    return stoneTransformations.getOrPut(stone) { processStone(stone) }
+}
 
 fun split(str: String): Pair<Long, Long> {
     val len = str.length
@@ -28,33 +49,16 @@ fun main() {
         }
     }
 
-    var input =
-        FileUtil.stringToIntegers(
-            FileUtil.getInput(11, sample = true)
-                .first()
-        )
-            .map { it.toLong() }
-            .toMutableList()
-
+    var input = FileUtil.stringToIntegers(
+        FileUtil.getInput(11, sample = true).first()
+    ).map { it.toLong() }.toMutableList()
+    input.forEach {
+        stones[it] = 1;
+    }
+val changes =
     var iteration = 0;
-    var prevLen = input.size
-    repeat(75) {
-        for (i in input.size - 1 downTo 0) {
-            val v = input[i]
-            if (v == 0L) {
-                input[i] = 1L
-            } else if ((ceil(log10((v + 1L).toDouble())) % 2) == 0.0) {
-                val pair = split(input[i].toString())
-                input[i] = pair.first
-                input.add(i + 1, pair.second)
-            } else {
-                input[i] = input[i] * 2024
-            }
-        }
-        var len = input.size;
-        println(len - prevLen)
-        prevLen = len;
-//        println("Iteration ${iteration++}")
+    repeat(6) {
+
     }
     println(input.size)
 }
